@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiMarvel from "../../api/apiMarvel";
 import style from "./home.module.css"
 import img from "./marvel.jpg"
@@ -6,11 +7,11 @@ import img from "./marvel.jpg"
 const Home = () => {
 
     const [data, setData] = useState([])
-    const [optional, setOptional] = useState('comics')
+    const [optional, setOptional] = useState('characters')
 
     async function getData(){
         try{
-            let res = await apiMarvel.get(`v1/public/${optional}?ts=1&apikey=b2d9ba9fafe4227c2cc8a808b7cc6797&hash=a4c1520f5835b6924da936263cdf56d8`)
+            let res = await apiMarvel.get(`v1/public/${optional}?ts=1&apikey=1efdb67ed087307731a198e0d8e204c3&hash=7135468905306d60f24e582f8ac439ab`)
             console.log(res.data.data.results)
             setData(res.data.data.results)
             console.log(optional)
@@ -26,6 +27,11 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const navigation = useNavigate();
+
+     const sendId = (id) => {
+         navigation("/infoPage", {state : { id }})
+     }
 
     return <div>
         <div>
@@ -47,7 +53,8 @@ const Home = () => {
             {data.map((item, index) => { return <div key={index} className={style.card}>
                 
                 <img src={`${item.thumbnail.path}.${item.thumbnail.extension}`} alt="" className={style.image} />
-                <h3>{item.name}</h3>
+                <h3 style={{color:'white;'}}>{item.name}</h3>
+                <button className={style.button} to="/infoPage" onClick={() => sendId(item)}>Open</button>
 
             </div>
 

@@ -16,6 +16,9 @@ body{
     background-color: black;
     text-align: center;
 }
+h3{
+    color:white
+}
 .image{
     width: 300px;
 }
@@ -42,4 +45,9 @@ body{
 .nav button:hover{
     background-color: rgb(158, 34, 34);
     color: wheat;
+}
+.button{
+    padding: 10px 20px;
+    background-color: rgb(243, 240, 41);
+    border-radius: 4px;
 }
