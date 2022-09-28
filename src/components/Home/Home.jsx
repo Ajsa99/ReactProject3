@@ -6,12 +6,15 @@ import img from "./marvel.jpg"
 const Home = () => {
 
     const [data, setData] = useState([])
+    const [optional, setOptional] = useState('comics')
 
     async function getData(){
         try{
-            const res = await apiMarvel.get(`v1/public/characters?ts=1&apikey=e8e2e671094d1e473087ea047b74612c&hash=04aeaf9506246c75a13afaed55ee1d6d`)
+            let res = await apiMarvel.get(`v1/public/${optional}?ts=1&apikey=b2d9ba9fafe4227c2cc8a808b7cc6797&hash=a4c1520f5835b6924da936263cdf56d8`)
             console.log(res.data.data.results)
             setData(res.data.data.results)
+            console.log(optional)
+         
         }
         catch(err){
             console.log(err);
@@ -20,6 +23,7 @@ const Home = () => {
 
     useEffect(()=>{
         getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -27,7 +31,14 @@ const Home = () => {
         <div>
             <img src={img} alt="Marvel jpg" className={style.imgMarvel} />
         </div>
-                {/* <button onClick={()=>getData()}>Fetch</button> */}
+        <div className={style.nav}>
+             <button onClick={()=>{setOptional('comics');getData()}}>Comics</button>
+             <button  onClick={()=>{setOptional('characters');getData()}}>Characters</button>
+             <button  onClick={()=>{setOptional('creators');getData()}}>Creators</button>
+             <button  onClick={()=>{setOptional('events');getData()}}>Events</button>
+             <button  onClick={()=>{setOptional('series');getData()}}>Series</button>
+        </div>
+               
 
             <div className={style.cards}>
 
